@@ -1,0 +1,10 @@
+#!/bin/bash
+
+TARGET_DIR=$WORKSPACE_DIR/target
+if [ $? -ne 0 ]; then
+  for file in $TARGET_DIR/*.bin; do echo $file $OUTPUT_DIR;done
+  arm-none-eabi-size $TARGET_DIR/workspace.elf > $OUTPUT_DIR/memory-use.log
+
+  # Normalize firmware binary name
+  mv $OUTPUT_DIR/workspace.bin $OUTPUT_DIR/firmware.bin
+fi

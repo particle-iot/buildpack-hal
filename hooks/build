@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd $FIRMWARE_PATH/modules/photon/user-part
+make COMPILE_LTO=n 
