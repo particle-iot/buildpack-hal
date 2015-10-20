@@ -1,5 +1,14 @@
 # Buildpack for HAL firmware
-Buildpack for modern (HAL) Particle firmware
+Buildpack for modern (HAL based) Particle firmware.
+
+| |
+|-|
+|  [Particle firmware](https://github.com/spark/firmware-buildpack-builder)  |
+| **HAL (you are here)** / [Legacy](https://github.com/spark/buildpack-0.3.x)   |
+| [Wiring preprocessor](https://github.com/spark/buildpack-arduino-preprocessor) |
+| [Base](https://github.com/spark/buildpack-base) |
+
+This image inherits [Wiring preprocessor](https://github.com/spark/buildpack-arduino-preprocessor) and calls [`preprocess-ino` function](https://github.com/spark/buildpack-arduino-preprocessor#running) before doing build.
 
 ## Building image
 
