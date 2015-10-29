@@ -13,6 +13,6 @@ RUN apt-get -y install gcc-4.8 g++-4.8
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 20
 # Install ARM gcc
-RUN apt-get -y install gcc-arm-none-eabi
+RUN apt-get -y --force-yes install gcc-arm-none-eabi
 
 COPY hooks /hooks
