@@ -1,4 +1,4 @@
-FROM particle/buildpack-arduino-preprocessor
+FROM particle/buildpack-arduino-preprocessor:0.0.2
 
 # Install add-apt-repository
 RUN apt-get update

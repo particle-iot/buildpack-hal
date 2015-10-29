@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+install:
+  - docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD
+
+script:
+  - docker build -t $DOCKER_IMAGE_NAME .
+  - if [ ! -z "$TRAVIS_TAG" ]; then docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG; fi && docker push $DOCKER_IMAGE_NAME
+
+env:
+  - DOCKER_IMAGE_NAME=particle/buildpack-hal
+notifications:
+  slack:
+    secure: VJ+tAeUzLkz4aMAshQ9ohXZb/1+DQ31kDpcZYDS5PZuXOujx57rzOBg4SKxB2awcmNS2JWlSMQRQtNUzfS15YNuLqgWVj57EQAy99QKsEvccOMELIwbpLtEyEInK5WrUk6vk9ymhk6MBT5+3JiQ4bAs5yvIxm+k8YCakV9QlnH4=
