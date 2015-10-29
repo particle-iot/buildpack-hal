@@ -1,6 +1,8 @@
 # Buildpack for HAL firmware
 Buildpack for modern (HAL based) Particle firmware.
 
+[![Build Status](https://magnum.travis-ci.com/spark/buildpack-hal.svg?token=M4rP8W5QPGszZyem6TGE&branch=master)](https://magnum.travis-ci.com/spark/buildpack-hal)
+
 | |
 |---|
 |  [Particle firmware](https://github.com/spark/firmware-buildpack-builder)  |
