@@ -27,7 +27,7 @@ $ docker build -t particle/buildpack-$BUILDPACK_IMAGE .
 
 ```bash
 $ mkdir -p ~/tmp/input && mkdir -p ~/tmp/output && mkdir -p ~/tmp/cache
-$ docker run --rm \
+$ docker run --rm=false \
   --privileged \
   -v ~/tmp/input:/input \
   -v ~/tmp/output:/output \
