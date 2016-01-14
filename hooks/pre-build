@@ -5,7 +5,7 @@ mkdir -p "$CACHE_DIR/$FIRMWARE_HASH"
 clone-repo $FIRMWARE_REPO $FIRMWARE_PATH
 
 # Preprocess .ino files
-preprocess-ino $WORKSPACE_DIR
+# preprocess-ino $WORKSPACE_DIR
 
 mkdir -p $WORKSPACE_DIR/target
 touch $WORKSPACE_DIR/target/workspace.bin
