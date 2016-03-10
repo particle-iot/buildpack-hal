@@ -1,14 +1,4 @@
 #!/bin/bash
 
-TARGET_DIR=$WORKSPACE_DIR/target
-if [ $? -eq 0 ]; then
-  copy-to-output $TARGET_DIR/*.bin
-  log-size $TARGET_DIR/workspace.elf
-
-  # Normalize firmware binary name
-  mv $OUTPUT_DIR/workspace.bin $OUTPUT_DIR/firmware.bin
-
-  # Copy system parts if available
-  copy-if-exists $FIRMWARE_PATH/build/target/system-part1/platform-$PLATFORM_ID-m/system-part1.bin $OUTPUT_DIR
-  copy-if-exists $FIRMWARE_PATH/build/target/system-part2/platform-$PLATFORM_ID-m/system-part2.bin $OUTPUT_DIR
-fi
+# Normalize firmware binary name
+mv $OUTPUT_DIR/sketch.bin $OUTPUT_DIR/firmware.bin
