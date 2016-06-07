@@ -1,18 +1,12 @@
-FROM particle/buildpack-wiring-preprocessor:0.0.3
+FROM particle/buildpack-base:latest
 
-# Install add-apt-repository
-RUN apt-get update
-RUN apt-get -y install make isomd5sum vim-common libarchive-zip-perl
-RUN apt-get -y install software-properties-common python-software-properties
-# Install toolchain
-RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
-RUN add-apt-repository -y ppa:terry.guo/gcc-arm-embedded
-RUN apt-get update
-# Install gcc
-RUN apt-get -y install gcc-4.8 g++-4.8
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 20
-# Install ARM gcc
-RUN apt-get -y --force-yes install gcc-arm-none-eabi
+RUN dpkg --add-architecture i386 \
+  && apt-get update -q && apt-get install -qy make isomd5sum bzip2 vim-common libarchive-zip-perl libc6:i386 \
+  && curl -o /tmp/gcc-arm-none-eabi.tar.bz2 -sSL https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2 \
+  && tar xjvf /tmp/gcc-arm-none-eabi.tar.bz2 -C /usr/local \
+  && mv /usr/local/gcc-arm-none-eabi-5_3-2016q1/ /usr/local/gcc-arm-embedded \
+  && apt-get remove -qy bzip2 && apt-get clean && apt-get purge \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/local/gcc-arm-embedded/share
 
-COPY hooks /hooks
+ENV PATH /usr/local/gcc-arm-embedded/bin:$PATH
+ADD bin /bin

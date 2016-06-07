@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cd $FIRMWARE_PATH/main
-make

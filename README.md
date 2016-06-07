@@ -28,12 +28,11 @@ $ docker build -t particle/buildpack-$BUILDPACK_IMAGE .
 ```bash
 $ mkdir -p ~/tmp/input && mkdir -p ~/tmp/output && mkdir -p ~/tmp/cache
 $ docker run --rm \
-  --privileged \
   -v ~/tmp/input:/input \
   -v ~/tmp/output:/output \
   -v ~/tmp/cache:/cache \
   -e FIRMWARE_REPO=https://github.com/spark/firmware.git#photon_043 \
-  -e PLATFORM_ID=6
+  -e PLATFORM_ID=6 \
   particle/buildpack-hal
 ```
 

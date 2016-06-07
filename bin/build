@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Export environment variables
+export APPDIR=$WORKSPACE_DIR
+export FIRMWARE_HASH=`echo -n $FIRMWARE_REPO | md5sum | awk '{ print $1 }'`
+export FIRMWARE_PATH="$CACHE_DIR/$FIRMWARE_HASH/firmware"
+
+# Download fimware to cache dir
+mkdir -p "$CACHE_DIR/$FIRMWARE_HASH"
+clone-repo $FIRMWARE_REPO $FIRMWARE_PATH
+
+mkdir -p $WORKSPACE_DIR/target
+touch $WORKSPACE_DIR/target/workspace.bin
+
+cd $FIRMWARE_PATH/main
+make
+
 TARGET_DIR=$WORKSPACE_DIR/target
 if [ $? -eq 0 ]; then
   copy-to-output $TARGET_DIR/*.bin
