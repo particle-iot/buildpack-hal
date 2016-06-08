@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:latest
+FROM particle/buildpack-base:0.3.6
 
 RUN dpkg --add-architecture i386 \
   && apt-get update -q && apt-get install -qy make isomd5sum bzip2 vim-common libarchive-zip-perl libc6:i386 \
