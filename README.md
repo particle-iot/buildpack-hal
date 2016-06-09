@@ -7,10 +7,9 @@ Buildpack for modern (HAL based) Particle firmware.
 |---|
 |  [Particle firmware](https://github.com/spark/firmware-buildpack-builder)  |
 | **HAL (you are here)** / [Legacy](https://github.com/spark/buildpack-0.3.x)   |
-| [Wiring preprocessor](https://github.com/spark/buildpack-wiring-preprocessor) |
 | [Base](https://github.com/spark/buildpack-base) |
 
-This image inherits [Wiring preprocessor](https://github.com/spark/buildpack-wiring-preprocessor) and calls [`preprocess-ino` function](https://github.com/spark/buildpack-wiring-preprocessor#running) before doing build.
+This image inherits [base buildpack](https://github.com/spark/buildpack-base).
 
 ## Building image
 

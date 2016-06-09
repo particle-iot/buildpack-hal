@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # Export environment variables
-export APPDIR=$WORKSPACE_DIR
-export FIRMWARE_HASH=`echo -n $FIRMWARE_REPO | md5sum | awk '{ print $1 }'`
-export FIRMWARE_PATH="$CACHE_DIR/$FIRMWARE_HASH/firmware"
+source /bin/setup-hal-env
 
 # Download fimware to cache dir
 mkdir -p "$CACHE_DIR/$FIRMWARE_HASH"
