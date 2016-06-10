@@ -1,0 +1,23 @@
+#!/bin/bash
+
+GCC_ARM_VERSIONS=( "5_3-2016q1" "5_2-2015q4" "4_9-2015q3" )
+GCC_5_3_2016q1_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2"
+GCC_5_2_2015q4_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-linux.tar.bz2"
+GCC_4_9_2015q3_URL="https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-linux.tar.bz2"
+
+# Build image with GCC versions specified above
+for version in "${GCC_ARM_VERSIONS[@]}"
+do
+	GCC_ARM_VERSION=$version
+	GCC_ARM_URL_VAR=GCC_$(echo $version | tr '-' '_')_URL
+	GCC_ARM_URL="${!GCC_ARM_URL_VAR}"
+	docker build -t $DOCKER_IMAGE_NAME \
+		--build-arg GCC_ARM_URL=$GCC_ARM_URL \
+		--build-arg GCC_ARM_VERSION=$GCC_ARM_VERSION \
+		.
+
+	docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG-$GCC_ARM_VERSION
+	if [ ! -z "$TRAVIS_TAG" ]; then
+		docker push $DOCKER_IMAGE_NAME:$TRAVIS_TAG-$GCC_ARM_VERSION
+	fi
+done
