@@ -13,13 +13,13 @@ This image inherits [base buildpack](https://github.com/spark/buildpack-base).
 
 ## Building image
 
-**Before building this image, build or pull [buildpack-wiring-preprocessor](https://github.com/spark/buildpack-wiring-preprocessor).**
+**Before building this image, build or pull [buildpack-base](https://github.com/spark/buildpack-base).**
 
 ```bash
 $ export BUILDPACK_IMAGE=hal
 $ git clone "git@github.com:spark/buildpack-${BUILDPACK_IMAGE}.git"
 $ cd buildpack-$BUILDPACK_IMAGE
-$ docker build -t particle/buildpack-$BUILDPACK_IMAGE .
+$ ./scripts/build-and-push
 ```
 
 ## Running
@@ -47,3 +47,7 @@ After build `~/tmp/output` will be propagated with:
 **Files only available if compilation succeeds:**
 * `firmware.bin` - compiled firmware
 * `memory-use.log` - firmware memory use
+
+### ARM GCC version
+When building image, couple variations will be created (you can see them by typing `docker images | grep particle/buildpack-hal`).
+Most important are different [ARM GCC versions](https://launchpad.net/gcc-arm-embedded/+download) you can use.
