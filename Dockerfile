@@ -9,4 +9,4 @@ RUN dpkg --add-architecture i386 \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/local/gcc-arm-embedded/share
 
 ENV PATH /usr/local/gcc-arm-embedded/bin:$PATH
-ADD bin /bin
+COPY bin /bin
