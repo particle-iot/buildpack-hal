@@ -1,7 +1,7 @@
 # Buildpack for HAL firmware
 Buildpack for modern (HAL based) Particle firmware.
 
-[![Build Status](https://travis-ci.org/spark/buildpack-hal.svg)](https://travis-ci.org/spark/buildpack-hal)
+[![Build Status](https://travis-ci.org/spark/buildpack-hal.svg)](https://travis-ci.org/spark/buildpack-hal) [![](https://imagelayers.io/badge/particle/buildpack-hal:latest.svg)](https://imagelayers.io/?images=particle/buildpack-hal:latest 'Get your own badge on imagelayers.io')
 
 | |
 |---|
@@ -30,7 +30,7 @@ $ docker run --rm \
   -v ~/tmp/input:/input \
   -v ~/tmp/output:/output \
   -v ~/tmp/cache:/cache \
-  -e FIRMWARE_REPO=https://github.com/spark/firmware.git#photon_043 \
+  -e FIRMWARE_REPO=https://github.com/spark/firmware.git#v0.5.1 \
   -e PLATFORM_ID=6 \
   particle/buildpack-hal
 ```
