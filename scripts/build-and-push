@@ -1,7 +1,5 @@
 #!/bin/bash
 
-docker --version
-
 GCC_ARM_VERSIONS=( "5_3-2016q1" "5_2-2015q4" "4_9-2015q3" )
 GCC_5_3_2016q1_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2"
 GCC_5_2_2015q4_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-linux.tar.bz2"
