@@ -11,13 +11,13 @@ do
 	GCC_ARM_VERSION=$version
 	GCC_ARM_URL_VAR=GCC_$(echo $version | tr '-' '_')_URL
 	GCC_ARM_URL="${!GCC_ARM_URL_VAR}"
-	docker build -t $DOCKER_IMAGE_NAME \
+	echo "docker build -t $DOCKER_IMAGE_NAME \
 		--build-arg GCC_ARM_URL=$GCC_ARM_URL \
 		--build-arg GCC_ARM_VERSION=$GCC_ARM_VERSION \
-		.
+		."
 
-	docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG-$GCC_ARM_VERSION
 	if [ ! -z "$TRAVIS_TAG" ]; then
-		docker push $DOCKER_IMAGE_NAME:$TRAVIS_TAG-$GCC_ARM_VERSION
+		echo "docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION"
+		echo "docker push $DOCKER_IMAGE_NAME:$TRAVIS_TAG-$GCC_ARM_VERSION"
 	fi
 done
