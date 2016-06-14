@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Normalize firmware binary name
-mv $OUTPUT_DIR/sketch.bin $OUTPUT_DIR/firmware.bin

@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Copy pin details with the other source files
-cp /oakCore/variants/oak/pins_arduino.* /oakCore/cores/oak/

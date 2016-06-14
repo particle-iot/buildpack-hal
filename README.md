@@ -1,26 +1,24 @@
-# Buildpack for HAL firmware
-Buildpack for modern (HAL based) Particle firmware.
+# Buildpack for Oak devices
+Buildpack for Oak devices using Particle.
 
-[![Build Status](https://travis-ci.org/spark/buildpack-hal.svg)](https://travis-ci.org/spark/buildpack-hal)
+[![Build Status](https://travis-ci.org/digistump/buildpack-oak.svg)](https://travis-ci.org/digistump/buildpack-oak)
 
 | |
 |---|
-|  [Particle firmware](https://github.com/spark/firmware-buildpack-builder)  |
-| **HAL (you are here)** / [Legacy](https://github.com/spark/buildpack-0.3.x)   |
-| [Wiring preprocessor](https://github.com/spark/buildpack-wiring-preprocessor) |
+| **Oak (you are here)**    |
 | [Base](https://github.com/spark/buildpack-base) |
 
-This image inherits [Wiring preprocessor](https://github.com/spark/buildpack-wiring-preprocessor) and calls [`preprocess-ino` function](https://github.com/spark/buildpack-wiring-preprocessor#running) before doing build.
+This image inherits [base buildpack](https://github.com/spark/buildpack-base).
 
 ## Building image
 
-**Before building this image, build or pull [buildpack-wiring-preprocessor](https://github.com/spark/buildpack-wiring-preprocessor).**
+**Before building this image, build or pull [buildpack-base](https://github.com/spark/buildpack-base).**
 
 ```bash
-$ export BUILDPACK_IMAGE=hal
-$ git clone "git@github.com:spark/buildpack-${BUILDPACK_IMAGE}.git"
+$ export BUILDPACK_IMAGE=oak
+$ git clone "git@github.com:digistump/buildpack-${BUILDPACK_IMAGE}.git"
 $ cd buildpack-$BUILDPACK_IMAGE
-$ docker build -t particle/buildpack-$BUILDPACK_IMAGE .
+$ docker build -t digistump/buildpack-$BUILDPACK_IMAGE --build-arg OAK_CORE_VERSION=1.0.2 .
 ```
 
 ## Running
@@ -28,24 +26,23 @@ $ docker build -t particle/buildpack-$BUILDPACK_IMAGE .
 ```bash
 $ mkdir -p ~/tmp/input && mkdir -p ~/tmp/output && mkdir -p ~/tmp/cache
 $ docker run --rm \
-  --privileged \
   -v ~/tmp/input:/input \
   -v ~/tmp/output:/output \
   -v ~/tmp/cache:/cache \
-  -e FIRMWARE_REPO=https://github.com/spark/firmware.git#photon_043 \
-  -e PLATFORM_ID=6
-  particle/buildpack-hal
+  -v ~/tmp/log:/log \
+  digistump/buildpack-oak
 ```
 
 ### Input files
 Source files have to be placed in `~/tmp/input`
 
 ### Output files
-After build `~/tmp/output` will be propagated with:
+If compilation succeeds `~/tmp/output` will be propagated with:
+
+* `firmware.bin` - compiled firmware
+
+### Log files
+Following logs will be placed in `~/tmp/log`:
 
 * `run.log` - `stdout` combined with `stderr`
 * `stderr.log` - contents of `stderr`, usefull to parse `gcc` errors
-
-**Files only available if compilation succeeds:**
-* `firmware.bin` - compiled firmware
-* `memory-use.log` - firmware memory use
