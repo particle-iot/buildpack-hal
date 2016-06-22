@@ -9,7 +9,7 @@ script:
   - if [ ! -z "$TRAVIS_TAG" ]; then docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG; fi && docker push $DOCKER_IMAGE_NAME
 
 env:
-  - DOCKER_IMAGE_NAME=particle/buildpack-hal
+  - DOCKER_IMAGE_NAME=digistump/buildpack-oak
 notifications:
   slack:
     secure: VJ+tAeUzLkz4aMAshQ9ohXZb/1+DQ31kDpcZYDS5PZuXOujx57rzOBg4SKxB2awcmNS2JWlSMQRQtNUzfS15YNuLqgWVj57EQAy99QKsEvccOMELIwbpLtEyEInK5WrUk6vk9ymhk6MBT5+3JiQ4bAs5yvIxm+k8YCakV9QlnH4=

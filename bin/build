@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Copy pin details with the other source files
+cp /oakCore/variants/oak/pins_arduino.* /oakCore/cores/oak/
+
+# Build
+cd /oakCore
+make
+
+# Normalize firmware binary name
+mv `find $WORKSPACE_DIR -name '*.bin'` $OUTPUT_DIR/firmware.bin

@@ -3,8 +3,8 @@
 #
 # A slightly modified version of makeESPArduino, which
 # is a makefile for ESP8286 Arduino projects.
-# 
-# Base file available at 
+#
+# Base file available at
 #    https://github.com/plerup/makeEspArduino
 #
 #====================================================================================
@@ -14,7 +14,7 @@
 #====================================================================================
 
 #=== Project specific definitions: sketch and list of needed libraries
-SKETCH ?= /input/sketch.ino
+SKETCH ?= $(shell find $(WORKSPACE_DIR) -name '*.ino')
 
 # Esp8266 Arduino git location
 ESP_ROOT ?= /oakCore
@@ -26,7 +26,7 @@ LIBS ?= $(ESP_LIBS)/Wire \
         $(ESP_LIBS)/ESP8266WebServer
 
 # Output directory
-BUILD_ROOT ?= /output
+BUILD_ROOT ?= $(WORKSPACE_DIR)
 
 # Board definitions
 FLASH_SIZE ?= 4M
@@ -143,7 +143,7 @@ $(MAIN_EXE): $(CORE_LIB) $(USER_OBJ)
 	echo '_tBuildInfo _BuildInfo = {"$(BUILD_DATE)","$(BUILD_TIME)"};' >>$(BUILD_INFO_CPP)
 	$(CPP) $(C_DEFINES) $(C_INCLUDES) $(CPP_FLAGS) $(BUILD_INFO_CPP) -o $(BUILD_INFO_OBJ)
 	$(LD) $(LD_FLAGS) -Wl,--start-group $^ $(BUILD_INFO_OBJ) $(LD_STD_LIBS) -Wl,--end-group -L$(OBJ_DIR) -o $(MAIN_ELF)
-	$(ESP_TOOL) -bin /output/obj/sketch.elf /output/sketch.bin .irom0.text .text .data .rodata
+	$(ESP_TOOL) -bin $(MAIN_ELF) $(MAIN_EXE) .irom0.text .text .data .rodata
 	$(TOOLS_BIN)/xtensa-lx106-elf-size -A $(MAIN_ELF) | perl -e $(MEM_USAGE)
 	perl -e 'print "Build complete. Elapsed time: ", time()-$(START_TIME),  " seconds\n\n"'
 
