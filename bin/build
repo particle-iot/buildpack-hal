@@ -13,8 +13,8 @@ touch $WORKSPACE_DIR/target/workspace.bin
 cd $FIRMWARE_PATH/main
 make
 
-TARGET_DIR=$WORKSPACE_DIR/target
 if [ $? -eq 0 ]; then
+  TARGET_DIR=$WORKSPACE_DIR/target
   copy-to-output $TARGET_DIR/*.bin
   log-size $TARGET_DIR/workspace.elf
 
