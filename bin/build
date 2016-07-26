@@ -24,4 +24,6 @@ if [ $? -eq 0 ]; then
   # Copy system parts if available
   copy-if-exists $FIRMWARE_PATH/build/target/system-part1/platform-$PLATFORM_ID-m/system-part1.bin $OUTPUT_DIR
   copy-if-exists $FIRMWARE_PATH/build/target/system-part2/platform-$PLATFORM_ID-m/system-part2.bin $OUTPUT_DIR
+else
+  exit $?
 fi
