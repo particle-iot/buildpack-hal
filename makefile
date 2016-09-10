@@ -29,10 +29,10 @@ LIBS ?= $(ESP_LIBS)/Wire \
 BUILD_ROOT ?= $(WORKSPACE_DIR)
 
 # Board definitions
-FLASH_SIZE ?= 4M
-FLASH_MODE ?= dio
+FLASH_SIZE ?= 32m
+FLASH_MODE ?= qio
 FLASH_SPEED ?= 40
-FLASH_LAYOUT ?= eagle.flash.4m.ld
+FLASH_LAYOUT ?= oak_full.ld
 
 # Upload parameters
 UPLOAD_SPEED ?= 230400
