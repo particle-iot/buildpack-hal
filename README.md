@@ -18,7 +18,7 @@ This image inherits [base buildpack](https://github.com/spark/buildpack-base).
 $ export BUILDPACK_IMAGE=oak
 $ git clone "git@github.com:digistump/buildpack-${BUILDPACK_IMAGE}.git"
 $ cd buildpack-$BUILDPACK_IMAGE
-$ docker build -t digistump/buildpack-$BUILDPACK_IMAGE --build-arg OAK_CORE_VERSION=1.0.5 .
+$ docker build -t digistump/buildpack-$BUILDPACK_IMAGE .
 ```
 
 ## Running
