@@ -8,9 +8,9 @@ RUN apt-get update && \
 
 # Install OakCore libraries - note that this points to
 # the latest "source code" zip release
-RUN wget -O /oakCore.zip https://github.com/digistump/OakCore/archive/1.0.5.zip && \
+RUN wget -O /oakCore.zip https://github.com/digistump/OakCore/archive/1.0.6.zip && \
     unzip oakCore.zip && \
-    mv /OakCore-1.0.5 /oakCore
+    mv /OakCore-1.0.6 /oakCore
 
 # Place supporting files into the right places
 COPY bin /bin
