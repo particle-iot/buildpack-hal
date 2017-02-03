@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:0.3.6
+FROM particle/buildpack-base:0.3.8
 
 ARG GCC_ARM_URL
 ARG GCC_ARM_VERSION
