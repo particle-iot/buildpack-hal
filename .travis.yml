@@ -4,7 +4,7 @@ services:
 env:
   - DOCKER_IMAGE_NAME=particle/buildpack-hal
 install:
-  - docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD
+  - docker login --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD
 script:
   - docker version
   - scripts/build-and-push

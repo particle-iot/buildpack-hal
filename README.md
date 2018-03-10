@@ -1,7 +1,7 @@
 # Buildpack for HAL firmware
 Buildpack for modern (HAL based) Particle firmware.
 
-[![Build Status](https://travis-ci.org/spark/buildpack-hal.svg)](https://travis-ci.org/spark/buildpack-hal) [![](https://imagelayers.io/badge/particle/buildpack-hal:latest.svg)](https://imagelayers.io/?images=particle/buildpack-hal:latest 'Get your own badge on imagelayers.io')
+[![Build Status](https://travis-ci.org/particle-iot/buildpack-hal.svg)](https://travis-ci.org/particle-iot/buildpack-hal) [![](https://imagelayers.io/badge/particle/buildpack-hal:latest.svg)](https://imagelayers.io/?images=particle/buildpack-hal:latest 'Get your own badge on imagelayers.io')
 
 | |
 |---|
@@ -17,7 +17,7 @@ This image inherits [base buildpack](https://github.com/particle-iot/buildpack-b
 
 ```bash
 $ export BUILDPACK_IMAGE=hal
-$ git clone "git@github.com:spark/buildpack-${BUILDPACK_IMAGE}.git"
+$ git clone "git@github.com:particle-iot/buildpack-${BUILDPACK_IMAGE}.git"
 $ cd buildpack-$BUILDPACK_IMAGE
 $ ./scripts/build-and-push
 ```
