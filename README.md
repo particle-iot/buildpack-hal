@@ -22,6 +22,10 @@ $ cd buildpack-$BUILDPACK_IMAGE
 $ ./scripts/build-and-push
 ```
 
+## Releasing
+
+This repository is added to our [Travis CI](https://travis-ci.org/particle-iot/buildpack-hal). To release a new version of this buildpack all you need to do is to create a new Git tag and push it to this repo and Travis will do all the work.
+
 ## Running
 
 ```bash
