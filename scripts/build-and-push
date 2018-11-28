@@ -6,6 +6,10 @@ GCC_4_9_2015q2_URL="https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-updat
 GCC_4_9_2015q3_URL="https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-linux.tar.bz2"
 GCC_5_2_2015q4_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-linux.tar.bz2"
 GCC_5_3_2016q1_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2"
+
+CMAKE_VERSION="3.13.0"
+CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh"
+
 set -vx
 
 # Build image with GCC versions specified above
@@ -18,6 +22,7 @@ do
 	docker build -t $DOCKER_IMAGE_NAME \
 --build-arg GCC_ARM_URL="$GCC_ARM_URL" \
 --build-arg GCC_ARM_VERSION="$GCC_ARM_VERSION" \
+--build-arg CMAKE_URL="$CMAKE_URL" \
 		.
 
 	if [ ! -z "$TRAVIS_TAG" ]; then
