@@ -14,6 +14,7 @@ RUN dpkg --add-architecture i386 \
      libc6:i386 \
      make \
      vim-common \
+     zip \
   && curl -o /tmp/cmake_install.sh -sSL ${CMAKE_URL} \
   && chmod +x /tmp/cmake_install.sh \
   && /tmp/cmake_install.sh --skip-license --prefix=/usr/local \
