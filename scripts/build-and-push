@@ -1,6 +1,11 @@
 #!/bin/bash
 
 GCC_ARM_VERSIONS=( "4_8-2014q2" "4_9-2015q2" "4_9-2015q3" "5_2-2015q4" "5_3-2016q1" )
+GCC_4_8_2014q2_CHECKSUM="0f80c6d2684c8e2bece37a2de4e8963b"
+GCC_4_9_2015q2_CHECKSUM="6d5e1ae27607bab87bd324c9be2df17a"
+GCC_4_9_2015q3_CHECKSUM="8a4a74872830f80c788c944877d3ad8c"
+GCC_5_2_2015q4_CHECKSUM="f88caac80b4444a17344f57ccb760b90"
+GCC_5_3_2016q1_CHECKSUM="5a261cac18c62d8b7e8c70beba2004bd"
 GCC_4_8_2014q2_URL="https://launchpad.net/gcc-arm-embedded/4.8/4.8-2014-q2-update/+download/gcc-arm-none-eabi-4_8-2014q2-20140609-linux.tar.bz2"
 GCC_4_9_2015q2_URL="https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-linux.tar.bz2"
 GCC_4_9_2015q3_URL="https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-linux.tar.bz2"
@@ -18,9 +23,12 @@ do
 	GCC_ARM_VERSION=$version
 	GCC_ARM_URL_VAR=GCC_$(echo $version | tr '-' '_')_URL
 	GCC_ARM_URL="${!GCC_ARM_URL_VAR}"
+	GCC_ARM_CHECKSUM_VAR=GCC_$(echo $version | tr '-' '_')_CHECKSUM
+	GCC_ARM_CHECKSUM="${!GCC_ARM_CHECKSUM_VAR}"
 	echo "Building $GCC_ARM_VERSION from $GCC_ARM_URL ..."
 	docker build -t $DOCKER_IMAGE_NAME \
 --build-arg GCC_ARM_URL="$GCC_ARM_URL" \
+--build-arg GCC_ARM_CHECKSUM="$GCC_ARM_CHECKSUM" \
 --build-arg GCC_ARM_VERSION="$GCC_ARM_VERSION" \
 --build-arg CMAKE_URL="$CMAKE_URL" \
 		.
