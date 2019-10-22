@@ -7,7 +7,7 @@ FROM node:8-slim as worker
 # Pull in temporary build environment variables
 ARG DEBIAN_FRONTEND
 ARG NPM_TOKEN
-ARG PARTICLE_DEVICEOS_VERSION
+ARG PARTICLE_DEVICEOS_VERSION=1.4.0
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 
 # Copy GitHub credentials
