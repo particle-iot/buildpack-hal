@@ -1,38 +1,29 @@
 #!/bin/bash
 
-GCC_ARM_VERSIONS=( "5_3-2016q1" )
-GCC_5_3_2016q1_CHECKSUM="5a261cac18c62d8b7e8c70beba2004bd"
-GCC_5_3_2016q1_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2"
-GCC_8_3_2019q3_CHECKSUM="6341f11972dac8de185646d0fbd73bfc"
-GCC_8_3_2019q3_URL="https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2"
+GIT_BRANCH="ch39834/workbench-installer"
+echo "Pulling manifest from 'device-os' branch '${GIT_BRANCH}'..."
 
-CMAKE_VERSION="3.13.0"
-CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh"
+# -e  Abort script at first error, when a command exits with
+#     non-zero status.
+# -x  Print a trace of simple commands and their arguments
+#     after they are expanded and before they are executed.
+set -ex
 
-set -vx
+# Generate build image
+echo "Generating build environment image '${DOCKER_IMAGE_NAME}'..."
+docker build \
+	--build-arg GIT_BRANCH="${GIT_BRANCH}" \
+	--build-arg GITHUB_TOKEN="${GITHUB_TOKEN}" \
+	--build-arg NPM_TOKEN="${NPM_TOKEN}" \
+	--tag ${DOCKER_IMAGE_NAME} \
+	.
 
-# Build image with GCC versions specified above
-for version in "${GCC_ARM_VERSIONS[@]}"
-do
-	GCC_ARM_VERSION=$version
-	GCC_ARM_URL_VAR=GCC_$(echo $version | tr '-' '_')_URL
-	GCC_ARM_URL="${!GCC_ARM_URL_VAR}"
-	GCC_ARM_CHECKSUM_VAR=GCC_$(echo $version | tr '-' '_')_CHECKSUM
-	GCC_ARM_CHECKSUM="${!GCC_ARM_CHECKSUM_VAR}"
-	echo "Building $GCC_ARM_VERSION from $GCC_ARM_URL ..."
-	docker build -t $DOCKER_IMAGE_NAME \
---build-arg GCC_ARM_URL="$GCC_ARM_URL" \
---build-arg GCC_ARM_CHECKSUM="$GCC_ARM_CHECKSUM" \
---build-arg GCC_ARM_VERSION="$GCC_ARM_VERSION" \
---build-arg CMAKE_URL="$CMAKE_URL" \
-		.
+# Only push images if a tag has been specified
+if [ ! -z "${TRAVIS_TAG}" ]; then
+	# Add tag information
+	docker tag ${DOCKER_IMAGE_NAME}:latest ${DOCKER_IMAGE_NAME}:${TRAVIS_TAG}
 
-	if [ ! -z "$TRAVIS_TAG" ]; then
-		docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
-		docker push $DOCKER_IMAGE_NAME:$TRAVIS_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
-	fi
-done
-# Push latest
-if [ ! -z "$TRAVIS_TAG" ]; then
-	docker push $DOCKER_IMAGE_NAME
+	# Push all tags
+	docker push ${DOCKER_IMAGE_NAME}:${TRAVIS_TAG}
+	docker push ${DOCKER_IMAGE_NAME}
 fi
