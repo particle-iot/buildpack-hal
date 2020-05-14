@@ -22,7 +22,7 @@ RUN dpkg --add-architecture i386 \
   && echo "${GCC_ARM_CHECKSUM} gcc-arm-none-eabi.tar.bz2" | md5sum -c --status - \
   && mv ./gcc-arm-none-eabi.tar.bz2 /tmp/gcc-arm-none-eabi.tar.bz2 \
   && tar xjvf /tmp/gcc-arm-none-eabi.tar.bz2 -C /usr/local \
-  && mv /usr/local/gcc-arm-none-eabi-${GCC_ARM_VERSION}/ /usr/local/gcc-arm-embedded \
+  && mv /usr/local/gcc-arm-none-eabi-*/ /usr/local/gcc-arm-embedded \
   && apt-get remove -qy bzip2 && apt-get clean && apt-get purge \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/local/gcc-arm-embedded/share
 
