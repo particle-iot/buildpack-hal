@@ -1,10 +1,10 @@
 #!/bin/bash
 
-GCC_ARM_VERSIONS=( "5_3-2016q1" "8_3-2019q3" )
+GCC_ARM_VERSIONS=( "5_3-2016q1" "9_2-2019q4" )
 GCC_5_3_2016q1_CHECKSUM="5a261cac18c62d8b7e8c70beba2004bd"
 GCC_5_3_2016q1_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2"
-GCC_8_3_2019q3_CHECKSUM="6341f11972dac8de185646d0fbd73bfc"
-GCC_8_3_2019q3_URL="https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2"
+GCC_9_2_2019q4_CHECKSUM="fe0029de4f4ec43cf7008944e34ff8cc"
+GCC_9_2_2019q4_URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2"
 
 CMAKE_VERSION="3.13.0"
 CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh"
