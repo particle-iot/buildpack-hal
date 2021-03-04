@@ -11,7 +11,7 @@ GCC_10_2_2020q4_URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10
 CMAKE_VERSION="3.13.0"
 CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh"
 
-set -vx
+set -evx
 
 # Build image with GCC versions specified above
 for version in "${GCC_ARM_VERSIONS[@]}"
