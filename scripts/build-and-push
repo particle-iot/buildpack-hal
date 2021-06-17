@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GCC_ARM_VERSIONS=( "5_3-2016q1" "9_2-2019q4" "10_2-2020q4" )
+GCC_ARM_VERSIONS=( "manifest" "5_3-2016q1" "9_2-2019q4" "10_2-2020q4" )
 GCC_5_3_2016q1_CHECKSUM="5a261cac18c62d8b7e8c70beba2004bd"
 GCC_5_3_2016q1_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2"
 GCC_9_2_2019q4_CHECKSUM="fe0029de4f4ec43cf7008944e34ff8cc"
@@ -21,6 +21,12 @@ do
 	GCC_ARM_URL="${!GCC_ARM_URL_VAR}"
 	GCC_ARM_CHECKSUM_VAR=GCC_$(echo $version | tr '-' '_')_CHECKSUM
 	GCC_ARM_CHECKSUM="${!GCC_ARM_CHECKSUM_VAR}"
+	DOCKER_TAG=$TRAVIS_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
+	if [ "${GCC_ARM_VERSION}" == "manifest" ]; then
+		# No GCC will be downloaded
+		GCC_ARM_URL="none"
+		DOCKER_TAG="${TRAVIS_TAG}-manifest"
+	fi
 	echo "Building $GCC_ARM_VERSION from $GCC_ARM_URL ..."
 	docker build -t $DOCKER_IMAGE_NAME \
 --build-arg GCC_ARM_URL="$GCC_ARM_URL" \
@@ -30,8 +36,8 @@ do
 		.
 
 	if [ ! -z "$TRAVIS_TAG" ]; then
-		docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
-		docker push $DOCKER_IMAGE_NAME:$TRAVIS_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
+		docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$DOCKER_TAG
+		docker push $DOCKER_IMAGE_NAME:$DOCKER_TAG
 	fi
 done
 # Push latest
