@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:0.4.0
+FROM particle/buildpack-base:master-7604946
 
 ARG GCC_ARM_URL
 ARG GCC_ARM_CHECKSUM
@@ -6,7 +6,7 @@ ARG GCC_ARM_VERSION
 ARG CMAKE_URL
 
 RUN dpkg --add-architecture i386 \
-  && sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list \
+#  && sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list \
   && apt-get update -q && apt-get install -qy \
      bzip2 \
      isomd5sum \
