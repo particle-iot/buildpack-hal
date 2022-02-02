@@ -48,6 +48,6 @@ do
 	fi
 done
 # Push latest
-if [ ! -z "$ARTIFACT_TAG" ]; then
+if [ ! -z "$CIRCLE_TAG" ]; then
 	docker push $DOCKER_IMAGE_NAME
 fi
