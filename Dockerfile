@@ -6,7 +6,6 @@ ARG GCC_ARM_VERSION
 ARG CMAKE_URL
 
 RUN dpkg --add-architecture i386 \
-#  && sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list \
   && apt-get update -q && apt-get install -qy \
      bzip2 \
      isomd5sum \
