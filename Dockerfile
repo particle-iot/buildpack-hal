@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:master-7604946
+FROM particle/buildpack-base:0.4.0
 
 ARG GCC_ARM_URL
 ARG GCC_ARM_CHECKSUM
