@@ -1,0 +1,43 @@
+version: 2.1
+
+# Explicit tag filters to trigger workflows on tags
+tag_filters: &tag_filters
+  filters:
+    tags:
+      only:
+        - /.+/
+
+jobs:
+  build-test-push:
+    docker:
+      - image: docker:stable-git
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    working_directory: ~/device-os
+    resource_class: small
+    environment:
+      DOCKER_IMAGE_NAME=particle/buildpack-hal
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: "Fetch dependencies"
+          command: |
+            apk -q update && apk -q add bash
+            git submodule update --init --recursive
+      - run:
+          name: "Build, test, push"
+          shell: /bin/bash
+          command: |
+            set -e
+            echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            scripts/build-and-push
+
+workflows:
+  build-test-push:
+    jobs:
+      - build-test-push:
+          <<: *tag_filters
+          context:
+            - particle-ci-private

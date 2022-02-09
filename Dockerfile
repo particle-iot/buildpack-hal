@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:0.3.8
+FROM particle/buildpack-base:0.4.0
 
 ARG GCC_ARM_URL
 ARG GCC_ARM_CHECKSUM
@@ -6,7 +6,6 @@ ARG GCC_ARM_VERSION
 ARG CMAKE_URL
 
 RUN dpkg --add-architecture i386 \
-  && sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list \
   && apt-get update -q && apt-get install -qy \
      bzip2 \
      isomd5sum \
@@ -18,6 +17,7 @@ RUN dpkg --add-architecture i386 \
      zip \
      wget \
      parallel \
+     gnupg \
   && curl -o /tmp/cmake_install.sh -sSL ${CMAKE_URL} \
   && chmod +x /tmp/cmake_install.sh \
   && /tmp/cmake_install.sh --skip-license --prefix=/usr/local \

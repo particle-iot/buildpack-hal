@@ -13,6 +13,13 @@ CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/
 
 set -evx
 
+if [ -z "$CIRCLE_TAG" ]; then
+	export ARTIFACT_TAG=$(echo "$CIRCLE_BRANCH" | tr '[:upper:]' '[:lower:]' | sed 's,/,-,g')-$(git rev-parse --short HEAD)
+else
+	export ARTIFACT_TAG=$CIRCLE_TAG
+fi
+
+
 # Build image with GCC versions specified above
 for version in "${GCC_ARM_VERSIONS[@]}"
 do
@@ -21,11 +28,11 @@ do
 	GCC_ARM_URL="${!GCC_ARM_URL_VAR}"
 	GCC_ARM_CHECKSUM_VAR=GCC_$(echo $version | tr '-' '_')_CHECKSUM
 	GCC_ARM_CHECKSUM="${!GCC_ARM_CHECKSUM_VAR}"
-	DOCKER_TAG=$TRAVIS_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
+	DOCKER_TAG=$ARTIFACT_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
 	if [ "${GCC_ARM_VERSION}" == "manifest" ]; then
 		# No GCC will be downloaded
 		GCC_ARM_URL="none"
-		DOCKER_TAG="${TRAVIS_TAG}-manifest"
+		DOCKER_TAG="${ARTIFACT_TAG}-manifest"
 	fi
 	echo "Building $GCC_ARM_VERSION from $GCC_ARM_URL ..."
 	docker build -t $DOCKER_IMAGE_NAME \
@@ -35,12 +42,12 @@ do
 --build-arg CMAKE_URL="$CMAKE_URL" \
 		.
 
-	if [ ! -z "$TRAVIS_TAG" ]; then
+	if [ ! -z "$ARTIFACT_TAG" ]; then
 		docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$DOCKER_TAG
 		docker push $DOCKER_IMAGE_NAME:$DOCKER_TAG
 	fi
 done
 # Push latest
-if [ ! -z "$TRAVIS_TAG" ]; then
+if [ ! -z "$CIRCLE_TAG" ]; then
 	docker push $DOCKER_IMAGE_NAME
 fi
