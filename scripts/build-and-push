@@ -1,13 +1,5 @@
 #!/bin/bash
 
-GCC_ARM_VERSIONS=( "manifest" "5_3-2016q1" "9_2-2019q4" "10_2-2020q4" )
-GCC_5_3_2016q1_CHECKSUM="5a261cac18c62d8b7e8c70beba2004bd"
-GCC_5_3_2016q1_URL="https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q1-update/+download/gcc-arm-none-eabi-5_3-2016q1-20160330-linux.tar.bz2"
-GCC_9_2_2019q4_CHECKSUM="fe0029de4f4ec43cf7008944e34ff8cc"
-GCC_9_2_2019q4_URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2"
-GCC_10_2_2020q4_CHECKSUM="8312c4c91799885f222f663fc81f9a31"
-GCC_10_2_2020q4_URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
-
 CMAKE_VERSION="3.13.0"
 CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh"
 
@@ -19,34 +11,15 @@ else
 	export ARTIFACT_TAG=$CIRCLE_TAG
 fi
 
+DOCKER_TAG="${ARTIFACT_TAG}-manifest"
 
-# Build image with GCC versions specified above
-for version in "${GCC_ARM_VERSIONS[@]}"
-do
-	GCC_ARM_VERSION=$version
-	GCC_ARM_URL_VAR=GCC_$(echo $version | tr '-' '_')_URL
-	GCC_ARM_URL="${!GCC_ARM_URL_VAR}"
-	GCC_ARM_CHECKSUM_VAR=GCC_$(echo $version | tr '-' '_')_CHECKSUM
-	GCC_ARM_CHECKSUM="${!GCC_ARM_CHECKSUM_VAR}"
-	DOCKER_TAG=$ARTIFACT_TAG-gcc-arm-none-eabi-$GCC_ARM_VERSION
-	if [ "${GCC_ARM_VERSION}" == "manifest" ]; then
-		# No GCC will be downloaded
-		GCC_ARM_URL="none"
-		DOCKER_TAG="${ARTIFACT_TAG}-manifest"
-	fi
-	echo "Building $GCC_ARM_VERSION from $GCC_ARM_URL ..."
-	docker build -t $DOCKER_IMAGE_NAME \
---build-arg GCC_ARM_URL="$GCC_ARM_URL" \
---build-arg GCC_ARM_CHECKSUM="$GCC_ARM_CHECKSUM" \
---build-arg GCC_ARM_VERSION="$GCC_ARM_VERSION" \
---build-arg CMAKE_URL="$CMAKE_URL" \
-		.
+docker build -t $DOCKER_IMAGE_NAME --build-arg CMAKE_URL="$CMAKE_URL" .
 
-	if [ ! -z "$ARTIFACT_TAG" ]; then
-		docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$DOCKER_TAG
-		docker push $DOCKER_IMAGE_NAME:$DOCKER_TAG
-	fi
-done
+if [ ! -z "$ARTIFACT_TAG" ]; then
+	docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$DOCKER_TAG
+	docker push $DOCKER_IMAGE_NAME:$DOCKER_TAG
+fi
+
 # Push latest
 if [ ! -z "$CIRCLE_TAG" ]; then
 	docker push $DOCKER_IMAGE_NAME
